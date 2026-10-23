@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>GoddessX Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>X-Empire Manager</title>
     
-    <!-- PWA Meta Tags & Manifest -->
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,739 +14,423 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Inter & Playfair -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        lux: {
-                            900: '#1a0505',
-                            800: '#3f0f0f',
-                            red: '#dc2626',
-                            gold: '#d4af37'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body {
-            background-color: #000000;
-            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f3f4f6;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .tab-active { color: #dc2626; text-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
-        .tab-inactive { color: #4b5563; }
-
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
-        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
-
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        .neon-border {
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+            border: 1px solid #dc2626;
         }
-
-        .loader {
-            border: 3px solid rgba(220, 38, 38, 0.1);
-            border-left-color: #dc2626;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #dc2626;
-            color: #fff;
-            text-align: center;
-            border-radius: 9999px;
-            padding: 12px;
-            position: fixed;
-            z-index: 100;
-            left: 50%;
-            bottom: 90px;
-            font-size: 14px;
-            font-weight: 600;
-            opacity: 0;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.5);
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        #toast.show { visibility: visible; opacity: 1; }
-
-        .glass-nav {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(220, 38, 38, 0.2);
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #dc2626, #fca5a5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .category-pill {
-            transition: all 0.2s;
-        }
-        .category-pill.active {
-            background-color: #dc2626;
-            color: white;
-            border-color: #dc2626;
-        }
-        
-        .shield-active {
-            color: #10b981;
-            text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="h-screen w-full flex flex-col overflow-hidden text-gray-100 pt-safe">
+<body class="h-screen flex flex-col overflow-hidden pb-16">
 
     <!-- Header -->
-    <header class="flex justify-between items-center p-4 border-b border-lux-800/50 bg-black/90 backdrop-blur-md z-10 sticky top-0">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-lux-red to-black flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] border border-red-500/30">
-                <i class="fas fa-crown text-[10px] text-lux-gold"></i>
-            </div>
-            <h1 class="text-xl font-serif font-bold tracking-wide text-white" id="headerTitle">Radar</h1>
+    <header class="glass-panel p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-crown text-red-600 text-xl"></i>
+            <h1 class="text-xl font-bold tracking-wider text-white">X-<span class="text-red-600">EMPIRE</span></h1>
         </div>
-        <!-- Shield Toggle for Radar -->
-        <button id="scamShieldBtn" class="hidden w-9 h-9 rounded-full bg-zinc-900 border border-zinc-800 hover:border-green-500 flex items-center justify-center transition-all shadow-sm">
-            <i class="fas fa-shield-alt text-zinc-500" id="scamShieldIcon"></i>
-        </button>
+        <div id="api-status" class="w-3 h-3 rounded-full bg-red-900 shadow-[0_0_8px_#7f1d1d]"></div>
     </header>
 
     <!-- Main Content Area -->
-    <main id="mainContent" class="flex-1 overflow-y-auto no-scrollbar pb-24 relative bg-[#050000]">
-        <!-- Content injected here -->
+    <main class="flex-1 overflow-y-auto hide-scrollbar p-4 relative" id="main-content">
+        
+        <!-- ================= STATS TAB (VISION AI) ================= -->
+        <section id="tab-stats" class="space-y-4">
+            <div class="glass-panel p-4 rounded-xl border border-gray-800">
+                <h2 class="font-bold text-lg mb-2"><i class="fa-solid fa-chart-pie text-red-500 mr-2"></i>Analytics Vision</h2>
+                <p class="text-xs text-gray-400 mb-4">Upload a screenshot of your X Analytics. The AI will read the numbers and build a strategy.</p>
+                
+                <!-- Upload Area -->
+                <input type="file" id="stats-image-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                <button onclick="document.getElementById('stats-image-input').click()" class="w-full bg-gray-900 hover:bg-gray-800 text-gray-400 py-8 rounded-xl border-2 border-dashed border-gray-700 transition-colors flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-camera text-3xl mb-2"></i>
+                    <span class="text-sm font-bold">Select Screenshot</span>
+                </button>
+                
+                <!-- Image Preview -->
+                <img id="image-preview" class="hidden w-full mt-4 rounded-xl border border-gray-700 object-contain max-h-48" />
+            </div>
+
+            <button onclick="analyzeImageStats()" id="btn-analyze-image" class="hidden w-full bg-gradient-to-r from-red-800 to-red-600 text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] active:scale-95 transition-transform">
+                <i class="fa-solid fa-brain mr-2"></i> Extract Data & Analyze
+            </button>
+
+            <!-- Result Container -->
+            <div id="stats-analysis-result" class="hidden mt-4 space-y-4">
+                <div class="grid grid-cols-2 gap-4" id="extracted-metrics">
+                    <!-- Extracted metrics injected here -->
+                </div>
+                <div class="glass-panel p-4 rounded-xl text-sm leading-relaxed border border-yellow-500/30 text-gray-300">
+                    <p class="text-xs text-red-500 font-bold mb-2">AI STRATEGY:</p>
+                    <span id="ai-strategy-text"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= RADAR TAB ================= -->
+        <section id="tab-radar" class="space-y-6 hidden">
+            <!-- Sniper Search -->
+            <div>
+                <h2 class="text-lg font-bold mb-3 border-b border-gray-800 pb-2"><i class="fa-solid fa-crosshairs text-red-500 mr-2"></i>Sniper Search Filters</h2>
+                <p class="text-xs text-gray-400 mb-4">Click to open X with a pre-configured advanced search query to find fresh targets without spam.</p>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="executeSearch('vanilla')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
+                        <span class="block text-sm font-bold text-white mb-1">☕ Vanilla / Normies</span>
+                        <span class="block text-[10px] text-gray-500 line-clamp-1">"treat you", "pay for your"</span>
+                    </button>
+                    <button onclick="executeSearch('anime')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
+                        <span class="block text-sm font-bold text-white mb-1">🌸 Anime Simps</span>
+                        <span class="block text-[10px] text-gray-500 line-clamp-1">"makima", "step on me"</span>
+                    </button>
+                    <button onclick="executeSearch('findom')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
+                        <span class="block text-sm font-bold text-white mb-1">💰 Findom / Paypigs</span>
+                        <span class="block text-[10px] text-gray-500 line-clamp-1">"tribute", "finsub"</span>
+                    </button>
+                    <button onclick="executeSearch('cucks')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
+                        <span class="block text-sm font-bold text-white mb-1">🤡 Cucks / Losers</span>
+                        <span class="block text-[10px] text-gray-500 line-clamp-1">"beta", "ignore me"</span>
+                    </button>
+                    <button onclick="executeSearch('feet')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
+                        <span class="block text-sm font-bold text-white mb-1">👣 Foot Fetish</span>
+                        <span class="block text-[10px] text-gray-500 line-clamp-1">"pedicure", "toes"</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Target Analysis -->
+            <div class="mt-8">
+                <h2 class="text-lg font-bold mb-3 border-b border-gray-800 pb-2"><i class="fa-solid fa-radar-border text-red-500 mr-2"></i>Analyze Target</h2>
+                <p class="text-xs text-gray-400 mb-4">Paste a tweet from your target here to generate 3 custom replies.</p>
+                <textarea id="target-tweet-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white placeholder-gray-500 focus:outline-none focus:border-red-600 mb-3 text-sm resize-none h-24" placeholder="Paste tweet text here..."></textarea>
+                <button onclick="generateTargetReplies()" id="btn-generate-replies" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95 transition-transform flex justify-center items-center">
+                    <i class="fa-solid fa-bolt mr-2"></i> Generate Bites
+                </button>
+            </div>
+
+            <div id="replies-container" class="hidden space-y-3 mt-4"></div>
+        </section>
+
+        <!-- ================= COMPOSER TAB ================= -->
+        <section id="tab-composer" class="space-y-4 hidden">
+            <div class="glass-panel p-4 rounded-xl border border-gray-800">
+                <h2 class="font-bold text-lg mb-2 flex justify-between items-center">
+                    Draft Post
+                    <span class="text-xs font-normal text-gray-400 bg-gray-800 px-2 py-1 rounded">RU -> EN Slang</span>
+                </h2>
+                <textarea id="draft-input" class="w-full bg-transparent border-none text-white focus:outline-none resize-none h-32 placeholder-gray-600" placeholder="Write your draft here in any language. The AI will translate it and polish it into perfect Twitter Findom slang..."></textarea>
+                
+                <div class="flex gap-2 mt-2">
+                    <button onclick="polishDraft()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl transition-colors">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-2 text-yellow-500"></i> Polish & Translate
+                    </button>
+                </div>
+            </div>
+
+            <div id="polished-result-container" class="hidden glass-panel p-4 rounded-xl neon-border">
+                <p class="text-xs text-red-400 mb-2 font-bold">READY TO POST:</p>
+                <p id="polished-text" class="text-white text-sm mb-4"></p>
+                <button onclick="copyToClipboard('polished-text')" class="w-full bg-white text-black font-bold py-2 rounded-lg flex items-center justify-center">
+                    <i class="fa-regular fa-copy mr-2"></i> Copy
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= SETTINGS TAB ================= -->
+        <section id="tab-settings" class="space-y-6 hidden">
+            <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fa-solid fa-key text-red-500 mr-3"></i> API Configuration</h2>
+                <p class="text-xs text-gray-400 mb-4">Enter your Google Gemini API key to activate the AI. Stored locally.</p>
+                <input type="password" id="api-key-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-red-600 mb-4" placeholder="AIzaSy...">
+                <button onclick="saveApiKey()" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95 transition-transform">
+                    Save Key
+                </button>
+            </div>
+        </section>
+
     </main>
 
     <!-- Bottom Navigation -->
-    <nav class="absolute bottom-0 w-full glass-nav flex justify-around p-2 pb-safe z-20">
-        <button class="nav-btn flex flex-col items-center p-2 w-full transition-all tab-active" data-tab="radar">
-            <i class="fas fa-crosshairs text-xl mb-1"></i>
-            <span class="text-[10px] font-semibold tracking-wider uppercase">Radar</span>
+    <nav class="fixed bottom-0 w-full glass-panel border-t border-gray-800 flex justify-around items-center py-3 pb-safe z-50">
+        <button onclick="switchTab('stats')" class="nav-btn flex flex-col items-center text-red-500 transition-colors w-1/4" data-target="tab-stats">
+            <i class="fa-solid fa-chart-simple text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">Stats</span>
         </button>
-        <button class="nav-btn flex flex-col items-center p-2 w-full transition-all tab-inactive" data-tab="composer">
-            <i class="fas fa-pen-nib text-xl mb-1"></i>
-            <span class="text-[10px] font-semibold tracking-wider uppercase">Composer</span>
+        <button onclick="switchTab('radar')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-radar">
+            <i class="fa-solid fa-satellite-dish text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">Radar</span>
         </button>
-        <button class="nav-btn flex flex-col items-center p-2 w-full transition-all tab-inactive" data-tab="stats">
-            <i class="fas fa-chart-pie text-xl mb-1"></i>
-            <span class="text-[10px] font-semibold tracking-wider uppercase">Stats</span>
+        <button onclick="switchTab('composer')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-composer">
+            <i class="fa-solid fa-pen-nib text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">Composer</span>
         </button>
-        <button class="nav-btn flex flex-col items-center p-2 w-full transition-all tab-inactive" data-tab="settings">
-            <i class="fas fa-cog text-xl mb-1"></i>
-            <span class="text-[10px] font-semibold tracking-wider uppercase">Settings</span>
+        <button onclick="switchTab('settings')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-settings">
+            <i class="fa-solid fa-gear text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">Settings</span>
         </button>
     </nav>
 
-    <!-- Quick Reply Modal -->
-    <div id="replyModal" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 hidden flex-col items-center justify-end p-0 opacity-0 transition-opacity duration-300">
-        <div class="bg-zinc-950 border-t border-lux-800 rounded-t-3xl w-full p-6 pb-safe transform translate-y-full transition-transform duration-300 max-h-[90vh] flex flex-col" id="replyModalContent">
-            
-            <div class="flex justify-between items-center mb-4 shrink-0">
-                <h2 class="text-lg font-bold flex items-center gap-2 text-white">
-                    <i class="fas fa-bolt text-lux-red"></i> Ammo Ready
-                </h2>
-                <button id="closeReplyBtn" class="text-zinc-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-zinc-900"><i class="fas fa-times"></i></button>
-            </div>
-            
-            <div class="overflow-y-auto no-scrollbar flex-1 pb-4">
-                <!-- Original Tweet Snippet -->
-                <div class="bg-black rounded-xl p-3 mb-5 text-sm text-zinc-400 border border-zinc-900 line-clamp-2 italic font-serif" id="replyOriginalTweet"></div>
-
-                <!-- Loading State -->
-                <div id="replyLoading" class="flex flex-col items-center justify-center py-10 hidden">
-                    <div class="loader mb-4"></div>
-                    <p class="text-xs text-lux-red font-semibold uppercase tracking-widest animate-pulse">Summoning toxicity...</p>
-                </div>
-
-                <!-- Result State -->
-                <div id="replyResult" class="hidden flex-col">
-                    <p class="text-[10px] text-lux-gold mb-3 uppercase tracking-wider font-bold"><i class="fas fa-info-circle"></i> Step 1: Tap a reply to copy</p>
-                    <div id="quickRepliesList" class="space-y-3 mb-6">
-                        <!-- Replies injected here -->
-                    </div>
-                    
-                    <div class="border-t border-zinc-900 pt-4 mt-auto">
-                        <p class="text-[10px] text-lux-gold mb-3 uppercase tracking-wider font-bold"><i class="fas fa-info-circle"></i> Step 2: Open X and paste</p>
-                        <button id="replyOnXBtn" class="w-full bg-black border border-blue-500/50 text-white font-bold rounded-xl p-3 hover:bg-blue-900/20 transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                            <i class="fab fa-twitter text-blue-400 text-lg"></i> Reply on X
-                        </button>
-                        
-                        <button id="regenerateReplyBtn" class="w-full mt-3 bg-zinc-900 border border-zinc-800 text-zinc-400 font-bold rounded-xl p-3 hover:bg-zinc-800 transition-colors text-xs uppercase tracking-wider">
-                            <i class="fas fa-redo"></i> Roll Again
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast">Copied to clipboard!</div>
-
-    <script type="module">
-        // --- State Management ---
-        let currentTab = 'radar';
-        let geminiApiKey = localStorage.getItem('gx_api_key') || ''; 
-        let currentCategory = 'All';
-        let scamShieldActive = false;
-        let currentReplyingTweetId = null;
-
-        // --- Mock Data ---
-        const mockStats = {
-            tributes: "$8,450",
-            tributesGrowth: "+22.4%",
-            conversion: "3.2%",
-            er: "18.5%",
-            shadowbanRisk: "Low (12%)",
-            linkClicks: "24.1K"
-        };
-
-        const mockRadarTweets = [
-            { id: "18465039281723", name: "Crypto Chad", handle: "@hodl_king", avatar: "https://placehold.co/100x100/111111/d4af37?text=CC", time: "10m", text: "Just made $10k on this SOL pump. Easiest money of my life 🚀 Time to celebrate.", likes: 412, replies: 89, category: "Vanilla", botProb: 15 },
-            { id: "18465039281724", name: "Sad Boy", handle: "@niceguy99", avatar: "https://placehold.co/100x100/111111/9ca3af?text=SB", time: "1h", text: "I treat women like absolute queens and still get left on read. Make it make sense.", likes: 12, replies: 45, category: "Cucks", botProb: 5 },
-            { id: "18465039281725", name: "Alpha Male Truth", handle: "@alphamindset_x", avatar: "https://placehold.co/100x100/111111/dc2626?text=AM", time: "2h", text: "Only beta males pay for content online. Real men demand respect. Subscribe to my $499 course.", likes: 1205, replies: 940, category: "Ragebait", botProb: 20 },
-            { id: "18465039281726", name: "Submissive Drone", handle: "@paypig_04", avatar: "https://placehold.co/100x100/111111/ffffff?text=SD", time: "3h", text: "I just got my paycheck and I don't deserve it. Who wants to ruin me today? 💳🐷", likes: 89, replies: 210, category: "Findom", botProb: 10 },
-            { id: "18465039281727", name: "Giveaway Bot", handle: "@crypto_drops99", avatar: "https://placehold.co/100x100/111111/00ff00?text=GB", time: "4h", text: "SENDING $5000 TO FIRST 100 PEOPLE WHO REPLY WITH THEIR ETH ADDRESS! 🚨🚨", likes: 5400, replies: 8900, category: "Vanilla", botProb: 95 },
-            { id: "18465039281728", name: "Lonely Trader", handle: "@wsb_loss", avatar: "https://placehold.co/100x100/111111/3b82f6?text=LT", time: "5h", text: "Lost everything on options again. Might just give my last $500 to a goddess and accept my fate as a loser.", likes: 45, replies: 12, category: "Findom", botProb: 8 }
-        ];
-
-        // --- DOM Elements ---
-        const mainContent = document.getElementById('mainContent');
-        const headerTitle = document.getElementById('headerTitle');
-        const navBtns = document.querySelectorAll('.nav-btn');
-        const scamShieldBtn = document.getElementById('scamShieldBtn');
-        const scamShieldIcon = document.getElementById('scamShieldIcon');
-        const toast = document.getElementById('toast');
-
-        // Reply Modal
-        const replyModal = document.getElementById('replyModal');
-        const replyModalContent = document.getElementById('replyModalContent');
-        const closeReplyBtn = document.getElementById('closeReplyBtn');
-        const replyOriginalTweet = document.getElementById('replyOriginalTweet');
-        const replyLoading = document.getElementById('replyLoading');
-        const replyResult = document.getElementById('replyResult');
-        const quickRepliesList = document.getElementById('quickRepliesList');
-        const regenerateReplyBtn = document.getElementById('regenerateReplyBtn');
-        const replyOnXBtn = document.getElementById('replyOnXBtn');
-
-        // --- Utility Functions ---
-        window.showToast = (message) => {
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        };
-
-        window.copyToClipboard = (text) => {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            showToast('Copied! Tap "Reply on X".');
-            
-            // Highlight selected reply visually
-            const replyDivs = document.querySelectorAll('#quickRepliesList > div');
-            replyDivs.forEach(div => {
-                div.classList.remove('border-lux-red', 'bg-red-900/20');
-                div.classList.add('border-zinc-800', 'bg-zinc-900');
-            });
-            event.currentTarget.classList.remove('border-zinc-800', 'bg-zinc-900');
-            event.currentTarget.classList.add('border-lux-red', 'bg-red-900/20');
-        };
-
-        function getBotIndicator(prob) {
-            if (prob > 70) return `<span class="text-red-500 font-mono text-[10px] font-bold"><i class="fas fa-robot"></i> ${prob}% SCAM</span>`;
-            if (prob > 30) return `<span class="text-yellow-500 font-mono text-[10px] font-bold"><i class="fas fa-exclamation-triangle"></i> ${prob}% BOT</span>`;
-            return `<span class="text-green-500 font-mono text-[10px] font-bold"><i class="fas fa-user-check"></i> ${prob}%</span>`;
-        }
-
-        // --- Modals Logic ---
-        function openModal(modalEl, contentEl) {
-            modalEl.classList.remove('hidden');
-            modalEl.classList.add('flex');
-            setTimeout(() => {
-                modalEl.classList.remove('opacity-0');
-                contentEl.classList.remove('translate-y-full', 'scale-95');
-            }, 10);
-        }
-
-        function closeModal(modalEl, contentEl) {
-            modalEl.classList.add('opacity-0');
-            contentEl.classList.add(contentEl.id.includes('Reply') ? 'translate-y-full' : 'scale-95');
-            setTimeout(() => {
-                modalEl.classList.add('hidden');
-                modalEl.classList.remove('flex');
-            }, 300);
-        }
-
-        // --- Render Functions ---
-
-        // 1. RADAR TAB
-        function renderRadar() {
-            headerTitle.innerHTML = `Radar`;
-            scamShieldBtn.classList.remove('hidden');
-
-            const categories = ['All', 'Vanilla', 'Findom', 'Cucks', 'Ragebait'];
-            
-            let html = `
-                <div class="fade-in">
-                    <!-- Filters -->
-                    <div class="flex gap-2 overflow-x-auto no-scrollbar p-4 border-b border-zinc-900 sticky top-0 bg-[#050000] z-10">
-                        ${categories.map(cat => `
-                            <button onclick="setCategory('${cat}')" class="category-pill whitespace-nowrap px-4 py-1.5 rounded-full border border-zinc-800 text-xs font-bold uppercase tracking-wider ${currentCategory === cat ? 'active' : 'text-zinc-400 bg-zinc-900'}">
-                                ${cat}
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div class="pb-4">
-            `;
-
-            let tweetsToRender = mockRadarTweets;
-            if (currentCategory !== 'All') {
-                tweetsToRender = tweetsToRender.filter(t => t.category === currentCategory);
-            }
-            if (scamShieldActive) {
-                tweetsToRender = tweetsToRender.filter(t => t.botProb < 50);
-            }
-
-            if (tweetsToRender.length === 0) {
-                html += `<div class="text-center p-10 text-zinc-500 text-sm">No targets found in this sector.</div>`;
-            }
-
-            tweetsToRender.forEach(tweet => {
-                html += `
-                    <div class="border-b border-zinc-900/50 p-4 hover:bg-zinc-900/30 transition-colors">
-                        <div class="flex gap-3">
-                            <img src="${tweet.avatar}" alt="${tweet.name}" class="w-12 h-12 rounded-full border border-zinc-800">
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center justify-between mb-1">
-                                    <div class="flex items-center gap-1.5 truncate">
-                                        <span class="font-bold text-zinc-200 text-sm truncate">${tweet.name}</span>
-                                        <span class="text-zinc-500 text-xs truncate">${tweet.handle}</span>
-                                    </div>
-                                    <div class="shrink-0">${getBotIndicator(tweet.botProb)}</div>
-                                </div>
-                                <p class="text-zinc-300 text-sm mt-1 mb-3 leading-snug">${tweet.text}</p>
-                                
-                                <div class="flex justify-start gap-6 text-zinc-500 text-xs mb-3 font-mono">
-                                    <div class="flex items-center gap-1.5"><i class="far fa-comment"></i> ${tweet.replies}</div>
-                                    <div class="flex items-center gap-1.5"><i class="far fa-heart"></i> ${tweet.likes}</div>
-                                </div>
-
-                                <button onclick="handleGenerateReplies('${tweet.id}')" class="w-full bg-zinc-950 border border-zinc-800 hover:border-lux-red text-lux-red rounded-lg py-2 px-4 text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                                    <i class="fas fa-crosshairs"></i> Target & Generate
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += `</div></div>`;
-            mainContent.innerHTML = html;
-        }
-
-        window.setCategory = (cat) => {
-            currentCategory = cat;
-            renderRadar();
-        };
-
-        scamShieldBtn.addEventListener('click', () => {
-            scamShieldActive = !scamShieldActive;
-            if (scamShieldActive) {
-                scamShieldIcon.classList.replace('text-zinc-500', 'shield-active');
-                scamShieldBtn.classList.add('border-green-500');
-                showToast('Scam Shield ON: Hiding bots (>50%)');
-            } else {
-                scamShieldIcon.classList.replace('shield-active', 'text-zinc-500');
-                scamShieldBtn.classList.remove('border-green-500');
-                showToast('Scam Shield OFF');
-            }
-            renderRadar();
-        });
-
-
-        // 2. COMPOSER TAB
-        function renderComposer() {
-            headerTitle.innerHTML = `Ghostwriter`;
-            scamShieldBtn.classList.add('hidden');
-            
-            mainContent.innerHTML = `
-                <div class="fade-in p-4 h-full flex flex-col">
-                    <p class="text-xs text-zinc-500 mb-4 font-medium uppercase tracking-wider">Draft & Polish Text</p>
-                    
-                    <div class="relative flex-1 min-h-[250px] mb-4">
-                        <textarea id="composerInput" class="w-full h-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-white placeholder-zinc-700 focus:outline-none focus:border-lux-red transition-all resize-none text-lg font-serif shadow-inner" placeholder="Enter rough draft (any language). E.g. 'Скинул мало денег, жалкий...'"></textarea>
-                        
-                        <button id="polishBtn" class="absolute bottom-4 right-4 bg-gradient-to-r from-lux-red to-red-800 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:scale-105 transition-transform z-10">
-                            <i class="fas fa-magic text-xl"></i>
-                        </button>
-                    </div>
-
-                    <div id="composerLoading" class="hidden flex-col items-center justify-center py-8">
-                        <div class="loader mb-3"></div>
-                        <p class="text-[10px] text-lux-red uppercase tracking-widest font-bold">Translating to Goddess...</p>
-                    </div>
-
-                    <div id="composerResultArea" class="hidden flex-col">
-                        <h3 class="text-[10px] font-bold text-lux-gold uppercase tracking-widest mb-2 flex items-center gap-2">
-                            <i class="fas fa-check-circle"></i> AI Result
-                        </h3>
-                        <div class="bg-black border border-zinc-800 rounded-xl p-4 text-white font-serif text-lg relative mb-4">
-                            <p id="polishedTextContent" class="mb-4"></p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button onclick="copyToClipboard(document.getElementById('polishedTextContent').innerText)" class="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold rounded-lg p-3 hover:bg-zinc-800 transition-colors text-xs uppercase tracking-wider flex items-center justify-center gap-2">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                            <button onclick="window.open('https://x.com/compose/post', '_blank')" class="bg-black border border-blue-500/50 text-white font-bold rounded-lg p-3 hover:bg-blue-900/20 transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
-                                <i class="fab fa-twitter text-blue-400"></i> New Post
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('polishBtn').addEventListener('click', polishTextWithAI);
-        }
-
-        // 3. STATS TAB
-        function renderStats() {
-            headerTitle.innerHTML = `<span class="gold-text">Empire</span> Stats`;
-            scamShieldBtn.classList.add('hidden');
-            
-            mainContent.innerHTML = `
-                <div class="fade-in space-y-4 p-4">
-                    
-                    <!-- Metrics Grid -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-zinc-950 border border-zinc-800 p-4 rounded-2xl relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-lux-red opacity-0 group-hover:opacity-5 transition-opacity"></div>
-                            <p class="text-[10px] text-lux-gold font-bold uppercase tracking-widest mb-1">Tributes</p>
-                            <div class="text-2xl font-serif font-bold text-white mb-1">${mockStats.tributes}</div>
-                            <div class="text-[10px] text-green-500 font-mono"><i class="fas fa-arrow-up"></i> ${mockStats.tributesGrowth}</div>
-                        </div>
-                        
-                        <div class="bg-zinc-950 border border-zinc-800 p-4 rounded-2xl">
-                            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">Conversion</p>
-                            <div class="text-2xl font-serif font-bold text-white mb-1">${mockStats.conversion}</div>
-                            <div class="text-[10px] text-zinc-400 font-mono">Tributes per click</div>
-                        </div>
-
-                        <div class="bg-zinc-950 border border-zinc-800 p-4 rounded-2xl">
-                            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">Engagement</p>
-                            <div class="text-2xl font-serif font-bold text-white mb-1">${mockStats.er}</div>
-                            <div class="text-[10px] text-zinc-400 font-mono">Avg per post</div>
-                        </div>
-
-                        <div class="bg-zinc-950 border border-zinc-800 p-4 rounded-2xl">
-                            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">Shadowban Risk</p>
-                            <div class="text-lg font-serif font-bold text-green-500 mb-1">${mockStats.shadowbanRisk}</div>
-                            <div class="text-[10px] text-zinc-400 font-mono">Scam Shield acting</div>
-                        </div>
-                    </div>
-
-                    <button id="analyzeStatsBtn" class="w-full bg-zinc-900 border border-lux-red/30 text-white font-bold rounded-xl p-4 hover:border-lux-red transition-all flex items-center justify-center gap-3 mt-2 shadow-[0_0_15px_rgba(220,38,38,0.1)]">
-                        <i class="fas fa-brain text-lux-red"></i> Generate AI Strategy
-                    </button>
-
-                    <div id="statsAnalysisLoading" class="hidden flex-col items-center justify-center py-8">
-                        <div class="loader mb-3"></div>
-                        <p class="text-[10px] text-lux-red uppercase tracking-widest font-bold">Analyzing Empire...</p>
-                    </div>
-
-                    <div id="statsAnalysisResult" class="hidden bg-black border border-zinc-800 rounded-xl p-5 text-sm text-zinc-300 leading-relaxed font-serif italic border-l-4 border-l-lux-red mt-4">
-                        <!-- AI Analysis injected here -->
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('analyzeStatsBtn').addEventListener('click', analyzeStatsWithAI);
-        }
-
-        // 4. SETTINGS TAB
-        function renderSettings() {
-            headerTitle.innerHTML = `Settings`;
-            scamShieldBtn.classList.add('hidden');
-            
-            mainContent.innerHTML = `
-                <div class="fade-in p-4 max-w-md mx-auto">
-                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 shadow-lg mb-6">
-                        <h2 class="text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wider">
-                            <i class="fas fa-key text-lux-red"></i> API Setup
-                        </h2>
-                        <div class="mb-5">
-                            <label class="block text-[10px] font-bold text-zinc-500 mb-2 uppercase tracking-wider">Gemini API Key</label>
-                            <input type="password" id="apiKeyInput" placeholder="AIzaSy..." value="${geminiApiKey}" class="w-full bg-black border border-zinc-800 rounded-xl p-3 text-white focus:outline-none focus:border-lux-red focus:ring-1 focus:ring-lux-red transition-all font-mono text-sm">
-                            <p class="text-[10px] text-zinc-600 mt-2 leading-tight">Key is stored in your browser's localStorage. Required for Ghostwriter, Auto-Replies, and AI Strategy.</p>
-                        </div>
-                        <button id="saveSettingsBtn" class="w-full bg-gradient-to-r from-lux-red to-red-800 text-white font-bold rounded-xl p-3 hover:from-red-600 hover:to-red-900 transition-all uppercase tracking-wider text-xs shadow-[0_0_15px_rgba(220,38,38,0.3)]">
-                            Save Key
-                        </button>
-                    </div>
-                    
-                    <div class="text-center text-zinc-600 text-xs font-mono uppercase">
-                        GoddessX Manager v2.1<br>Built for dominance.
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('saveSettingsBtn').addEventListener('click', () => {
-                geminiApiKey = document.getElementById('apiKeyInput').value.trim();
-                localStorage.setItem('gx_api_key', geminiApiKey);
-                showToast('Settings saved successfully.');
-            });
-        }
-
-
-        // --- Navigation Logic ---
-        function switchTab(tabId) {
-            currentTab = tabId;
-            
-            navBtns.forEach(btn => {
-                if (btn.dataset.tab === tabId) {
-                    btn.classList.replace('tab-inactive', 'tab-active');
-                    btn.querySelector('i').classList.add('text-lux-red');
-                } else {
-                    btn.classList.replace('tab-active', 'tab-inactive');
-                    btn.querySelector('i').classList.remove('text-lux-red');
-                }
-            });
-
-            mainContent.innerHTML = ''; 
-            if (tabId === 'radar') renderRadar();
-            if (tabId === 'composer') renderComposer();
-            if (tabId === 'stats') renderStats();
-            if (tabId === 'settings') renderSettings();
-            
-            mainContent.scrollTop = 0;
-        }
-
-        navBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (currentTab !== btn.dataset.tab) switchTab(btn.dataset.tab);
-            });
-        });
-
-
-        // --- API Integration: Quick Replies ---
-        window.handleGenerateReplies = (tweetId) => {
-            if (!geminiApiKey) {
-                showToast('API Key required. Go to Settings.');
-                switchTab('settings');
-                return;
-            }
-
-            const targetTweet = mockRadarTweets.find(t => t.id === tweetId);
-            currentReplyingTweetId = tweetId; // Store for X intent
-            
-            replyOriginalTweet.innerHTML = `<span class="text-zinc-600">Replying to ${targetTweet.handle}:</span><br>"${targetTweet.text}"`;
-            
-            replyLoading.classList.remove('hidden');
-            replyResult.classList.add('hidden');
-            quickRepliesList.innerHTML = '';
-            
-            openModal(replyModal, replyModalContent);
-            generateQuickRepliesAI(targetTweet);
-        };
-
-        closeReplyBtn.addEventListener('click', () => closeModal(replyModal, replyModalContent));
+    <!-- Logic Script -->
+    <script>
+        let apiKey = localStorage.getItem('gemini_api_key') || '';
+        let uploadedBase64 = null;
+        let uploadedMimeType = null;
         
-        regenerateReplyBtn.addEventListener('click', () => {
-            const targetTweet = mockRadarTweets.find(t => t.id === currentReplyingTweetId);
-            replyLoading.classList.remove('hidden');
-            replyResult.classList.add('hidden');
-            generateQuickRepliesAI(targetTweet);
-        });
+        function updateApiStatus() {
+            const indicator = document.getElementById('api-status');
+            if(apiKey) {
+                indicator.classList.replace('bg-red-900', 'bg-green-500');
+                indicator.classList.replace('shadow-[0_0_8px_#7f1d1d]', 'shadow-[0_0_8px_#22c55e]');
+                document.getElementById('api-key-input').value = apiKey;
+            }
+        }
 
-        // Intent URL for Twitter
-        replyOnXBtn.addEventListener('click', () => {
-            if (!currentReplyingTweetId) return;
-            const intentUrl = `https://x.com/intent/tweet?in_reply_to=${currentReplyingTweetId}`;
-            window.open(intentUrl, '_blank');
-        });
+        function saveApiKey() {
+            const input = document.getElementById('api-key-input').value.trim();
+            if(input) {
+                localStorage.setItem('gemini_api_key', input);
+                apiKey = input;
+                updateApiStatus();
+                alert('API Key Saved Successfully!');
+            }
+        }
 
-        async function generateQuickRepliesAI(tweet) {
-            const systemPrompt = `Act as a ruthless, arrogant findom (financial domination) goddess on Twitter. Generate exactly 3 short, biting replies to the user's tweet. Strategy depends on their vibe: If they are 'Cucks' or 'Findom', be degrading and demand money. If 'Vanilla' or 'Ragebait', use sharp sarcasm or mock their poverty/lifestyle to trigger engagement. Keep it under 280 chars. NO hashtags. Tone: wealthy, dismissive, elite.`;
-            const userPromptText = `Target Category: ${tweet.category}. Target Tweet: "${tweet.text}"`;
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`;
+        function switchTab(tabId) {
+            document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
             
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-red-500');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.querySelector(`.nav-btn[data-target="tab-${tabId}"]`);
+            activeBtn.classList.remove('text-gray-500');
+            activeBtn.classList.add('text-red-500');
+            window.scrollTo(0, 0);
+        }
+
+        async function copyToClipboard(elementId, isDirectText = false) {
+            const text = isDirectText ? elementId : document.getElementById(elementId).innerText;
+            try {
+                await navigator.clipboard.writeText(text);
+                if(!isDirectText) alert('Copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+        }
+
+        function executeSearch(category) {
+            const queries = {
+                vanilla: '("pay for your" OR "treat you" OR "buy you") -filter:links -filter:replies lang:en',
+                anime: '("makima" OR "waifu" OR "good boy" OR "step on me") -filter:links -filter:replies lang:en',
+                findom: '("paypig" OR "finsub" OR "send tribute" OR "wallet") -filter:links -filter:replies lang:en',
+                cucks: '("cuck" OR "beta" OR "loser" OR "ignore me") -filter:links -filter:replies lang:en',
+                feet: '("foot fetish" OR "feet" OR "toes" OR "sneakers") "goddess" -filter:links -filter:replies lang:en'
+            };
+            const query = queries[category];
+            window.open(`https://x.com/search?q=${encodeURIComponent(query)}&f=live`, '_blank');
+        }
+
+        // Universal Gemini Call with Image Support (uses 1.5-flash which is perfect for images)
+        async function callGemini(prompt, systemInstruction = "", imageBase64 = null, imageMime = null) {
+            if(!apiKey) {
+                alert('Please enter your Gemini API Key in Settings first.');
+                switchTab('settings');
+                return null;
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            
+            const parts = [{ text: prompt }];
+            if (imageBase64 && imageMime) {
+                parts.push({
+                    inlineData: {
+                        mimeType: imageMime,
+                        data: imageBase64
+                    }
+                });
+            }
+
             const payload = {
-                contents: [{ parts: [{ text: userPromptText }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: {
-                    temperature: 0.9,
-                    responseMimeType: "application/json",
-                    responseSchema: { type: "ARRAY", items: { type: "STRING" } }
-                }
+                contents: [{ parts: parts }],
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                generationConfig: { responseMimeType: "application/json" }
             };
 
             try {
-                const response = await fetch(apiUrl, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) throw new Error('API Error');
-                const result = await response.json();
-                const replies = JSON.parse(result.candidates[0].content.parts[0].text);
-                
-                quickRepliesList.innerHTML = replies.map(reply => `
-                    <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 cursor-pointer transition-all active:scale-95" onclick="copyToClipboard('${reply.replace(/'/g, "\\'")}')">
-                        <p class="text-white font-medium text-sm leading-relaxed">${reply}</p>
-                    </div>
-                `).join('');
-
-                replyLoading.classList.add('hidden');
-                replyResult.classList.remove('hidden');
-                replyResult.classList.add('flex');
+                const data = await response.json();
+                if(data.error) throw new Error(data.error.message);
+                return JSON.parse(data.candidates[0].content.parts[0].text);
             } catch (error) {
-                quickRepliesList.innerHTML = `<p class="text-red-500 text-sm p-4 text-center border border-red-900 rounded-xl">Error generating replies. Check API key.</p>`;
-                replyLoading.classList.add('hidden');
-                replyResult.classList.remove('hidden');
-                replyResult.classList.add('flex');
+                alert('API Error: ' + error.message);
+                return null;
             }
         }
 
-        // --- API Integration: Composer Polish ---
-        async function polishTextWithAI() {
-            if (!geminiApiKey) {
-                showToast('API Key required. Go to Settings.');
-                switchTab('settings');
-                return;
-            }
+        // ================= IMAGE HANDLING & STATS =================
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-            const rawText = document.getElementById('composerInput').value.trim();
-            if (!rawText) return;
-
-            const loadingEl = document.getElementById('composerLoading');
-            const resultAreaEl = document.getElementById('composerResultArea');
-            const contentEl = document.getElementById('polishedTextContent');
-
-            loadingEl.classList.remove('hidden');
-            loadingEl.classList.add('flex');
-            resultAreaEl.classList.add('hidden');
-            resultAreaEl.classList.remove('flex');
-
-            const systemPrompt = "Translate (if needed) and polish the user's text into native, edgy English Twitter slang for a Findom Goddess. It must sound dominant, wealthy, arrogant, and informal. Return ONLY the polished text.";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: rawText }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { temperature: 0.8 }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                document.getElementById('image-preview').src = dataUrl;
+                document.getElementById('image-preview').classList.remove('hidden');
+                document.getElementById('btn-analyze-image').classList.remove('hidden');
+                
+                uploadedMimeType = file.type;
+                uploadedBase64 = dataUrl.split(',')[1];
             };
-
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error('API Error');
-                const result = await response.json();
-                contentEl.innerText = result.candidates[0].content.parts[0].text.trim();
-                
-                loadingEl.classList.add('hidden');
-                loadingEl.classList.remove('flex');
-                resultAreaEl.classList.remove('hidden');
-                resultAreaEl.classList.add('flex');
-            } catch (error) {
-                contentEl.innerText = "Error polishing text. Check API key.";
-                loadingEl.classList.add('hidden');
-                loadingEl.classList.remove('flex');
-                resultAreaEl.classList.remove('hidden');
-                resultAreaEl.classList.add('flex');
-            }
+            reader.readAsDataURL(file);
         }
 
-        // --- API Integration: Stats Analysis ---
-        async function analyzeStatsWithAI() {
-            if (!geminiApiKey) {
-                showToast('API Key required. Go to Settings.');
-                switchTab('settings');
-                return;
+        async function analyzeImageStats() {
+            if (!uploadedBase64) return;
+            
+            const btn = document.getElementById('btn-analyze-image');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analyzing...';
+            btn.disabled = true;
+
+            const systemInstruction = `You are a ruthless, highly strategic Findom account manager. The user uploaded a screenshot of their X (Twitter) analytics.
+            1. Extract up to 4 key metrics you see (e.g., Impressions, Profile visits, Link clicks, etc.). Keep the names short.
+            2. Give short, harsh strategic advice based on these numbers for a Findom account.
+            Output JSON exactly like this: 
+            {
+                "metrics": {"Impressions": "1.2K", "Clicks": "45"},
+                "strategy": "Your brutal 2-3 sentence strategic advice here."
+            }`;
+
+            const result = await callGemini("Analyze this Twitter analytics screenshot.", systemInstruction, uploadedBase64, uploadedMimeType);
+            
+            if(result && result.metrics) {
+                const metricsContainer = document.getElementById('extracted-metrics');
+                metricsContainer.innerHTML = '';
+                for (const [key, val] of Object.entries(result.metrics)) {
+                    metricsContainer.innerHTML += `
+                        <div class="glass-panel p-4 rounded-2xl border border-red-900/30">
+                            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">${key}</p>
+                            <p class="text-xl font-black text-white">${val}</p>
+                        </div>
+                    `;
+                }
+                document.getElementById('ai-strategy-text').innerText = result.strategy;
+                document.getElementById('stats-analysis-result').classList.remove('hidden');
             }
 
-            const btn = document.getElementById('analyzeStatsBtn');
-            const loading = document.getElementById('statsAnalysisLoading');
-            const resultDiv = document.getElementById('statsAnalysisResult');
-            
-            btn.classList.add('hidden');
-            loading.classList.remove('hidden');
-            loading.classList.add('flex');
-            resultDiv.classList.add('hidden');
-
-            const promptText = `Act as a strategic advisor for a Findom X/Twitter account. Here are the current metrics: Tributes: ${mockStats.tributes} (${mockStats.tributesGrowth}), Conversion Rate: ${mockStats.conversion}, Engagement Rate: ${mockStats.er}, Link Clicks: ${mockStats.linkClicks}, Shadowban Risk: ${mockStats.shadowbanRisk}. Write a short, punchy, ruthless 1-paragraph strategic breakdown on what to focus on next (e.g. increase ragebait, push payment links harder, avoid certain hashtags). Use a cold, professional tone.`;
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                generationConfig: { temperature: 0.7 }
-            };
-
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) throw new Error('API Error');
-                const result = await response.json();
-                
-                resultDiv.innerText = result.candidates[0].content.parts[0].text.trim();
-                
-                loading.classList.add('hidden');
-                loading.classList.remove('flex');
-                resultDiv.classList.remove('hidden');
-                btn.classList.remove('hidden');
-                btn.innerHTML = `<i class="fas fa-redo text-lux-red"></i> Refresh Strategy`;
-            } catch (error) {
-                resultDiv.innerText = "Failed to fetch strategy. Check API connection.";
-                loading.classList.add('hidden');
-                loading.classList.remove('flex');
-                resultDiv.classList.remove('hidden');
-                btn.classList.remove('hidden');
-            }
+            btn.innerHTML = '<i class="fa-solid fa-brain mr-2"></i> Extract Data & Analyze';
+            btn.disabled = false;
         }
 
-        // --- Init ---
-        window.onload = () => {
-            switchTab('radar');
-        };
+        // ================= RADAR REPLIES =================
+        async function generateTargetReplies() {
+            const tweetText = document.getElementById('target-tweet-input').value.trim();
+            if (!tweetText) return alert("Please paste the target's tweet first.");
 
+            const btn = document.getElementById('btn-generate-replies');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Generating...';
+            btn.disabled = true;
+
+            const systemInstruction = `You are a ruthless, arrogant, yet witty Findom Goddess on Twitter. 
+            The user will provide a tweet from a potential target. 
+            Generate 3 different short replies to hook them or assert dominance.
+            Keep it strictly under 150 characters per reply. Use modern Twitter slang.
+            Output JSON: {"replies": ["reply 1", "reply 2", "reply 3"]}`;
+            
+            const result = await callGemini(`Target tweet: "${tweetText}"`, systemInstruction);
+            
+            if (result && result.replies) {
+                const container = document.getElementById('replies-container');
+                container.innerHTML = '';
+                result.replies.forEach((reply, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 cursor-pointer transition-colors';
+                    card.onclick = function() {
+                        copyToClipboard(reply, true);
+                        this.classList.add('bg-red-900/30');
+                        setTimeout(() => this.classList.remove('bg-red-900/30'), 300);
+                        const span = this.querySelector('.copy-indicator');
+                        span.textContent = 'Copied!';
+                        span.classList.add('text-green-400');
+                        setTimeout(() => { span.textContent = `Option ${index + 1}`; span.classList.remove('text-green-400'); }, 1500);
+                    };
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-xs text-red-500 font-bold copy-indicator">Option ${index + 1}</span>
+                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                        </div>
+                        <p class="text-sm text-gray-200">"${reply}"</p>
+                    `;
+                    container.appendChild(card);
+                });
+                container.classList.remove('hidden');
+            }
+            btn.innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Generate Bites';
+            btn.disabled = false;
+        }
+
+        // ================= COMPOSER =================
+        async function polishDraft() {
+            const draft = document.getElementById('draft-input').value;
+            if(!draft) return;
+            const btn = document.querySelector('button[onclick="polishDraft()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Polishing...';
+
+            const systemInstruction = `You are a social media manager for a dominant Findom account on Twitter. 
+            Translate (if not in English) and polish the provided text into a perfect Twitter post.
+            Make it sound arrogant and manipulative using current English slang.
+            Output JSON: {"text": "the polished text"}`;
+            
+            const result = await callGemini(draft, systemInstruction);
+            
+            if(result && result.text) {
+                document.getElementById('polished-text').innerText = result.text;
+                document.getElementById('polished-result-container').classList.remove('hidden');
+            }
+            btn.innerHTML = originalText;
+        }
+
+        updateApiStatus();
+        switchTab('stats'); // Start on Stats tab to show off the new feature
     </script>
+
+    <!-- Service Worker -->
     <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(registration => console.log('ServiceWorker registered'))
-        .catch(err => console.log('ServiceWorker registration failed: ', err));
-    });
-  }
-</script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .catch(err => console.log('SW fail: ', err));
+        });
+      }
+    </script>
 </body>
 </html>
