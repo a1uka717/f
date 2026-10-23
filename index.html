@@ -28,6 +28,10 @@
             box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
             border: 1px solid #dc2626;
         }
+        .fansly-border {
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+            border: 1px solid #38bdf8;
+        }
         .glass-panel {
             background: rgba(20, 20, 20, 0.8);
             backdrop-filter: blur(10px);
@@ -56,7 +60,7 @@
     <!-- Main Content Area -->
     <main class="flex-1 overflow-y-auto hide-scrollbar p-4 relative" id="main-content">
         
-        <!-- ================= STATS TAB (VISION AI) ================= -->
+        <!-- ================= STATS TAB ================= -->
         <section id="tab-stats" class="space-y-4">
             <div class="glass-panel p-4 rounded-xl border border-gray-800">
                 <h2 class="font-bold text-lg mb-2"><i class="fa-solid fa-chart-pie text-red-500 mr-2"></i>Analytics Vision</h2>
@@ -85,40 +89,32 @@
 
         <!-- ================= RADAR TAB ================= -->
         <section id="tab-radar" class="space-y-6 hidden">
-            <!-- Sniper Search -->
             <div>
                 <h2 class="text-lg font-bold mb-3 border-b border-gray-800 pb-2"><i class="fa-solid fa-fire-flame-curved text-red-500 mr-2"></i>Trending Targets</h2>
-                <p class="text-xs text-gray-400 mb-4">Finds fresh tweets that already have 15+ likes so your comments get high visibility. Bots filtered out.</p>
-                
+                <p class="text-xs text-gray-400 mb-4">Finds fresh tweets that already have 15+ likes.</p>
                 <div class="grid grid-cols-2 gap-3">
                     <button onclick="executeSearch('vanilla')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
                         <span class="block text-sm font-bold text-white mb-1">☕ Normies (Trending)</span>
-                        <span class="block text-[10px] text-gray-500 line-clamp-1">"treat you", "pay for your"</span>
                     </button>
                     <button onclick="executeSearch('crypto')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
                         <span class="block text-sm font-bold text-white mb-1">📉 Crypto/Bros (Rage)</span>
-                        <span class="block text-[10px] text-gray-500 line-clamp-1">Alpha males, tech bros</span>
                     </button>
                     <button onclick="executeSearch('findom')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
                         <span class="block text-sm font-bold text-white mb-1">💰 Paypigs (Fresh)</span>
-                        <span class="block text-[10px] text-gray-500 line-clamp-1">"tribute", "finsub"</span>
                     </button>
                     <button onclick="executeSearch('stem')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all">
                         <span class="block text-sm font-bold text-white mb-1">🧬 STEM (Flex/Dom)</span>
-                        <span class="block text-[10px] text-gray-500 line-clamp-1">Med school, biochem losers</span>
                     </button>
                     <button onclick="executeSearch('anime')" class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 text-left active:scale-95 transition-all col-span-2">
                         <span class="block text-sm font-bold text-white mb-1 text-center">🌸 Anime Simps (Trending)</span>
                     </button>
                 </div>
             </div>
-
-            <!-- Target Analysis -->
             <div class="mt-4">
                 <h2 class="text-lg font-bold mb-3 border-b border-gray-800 pb-2"><i class="fa-solid fa-radar-border text-red-500 mr-2"></i>Analyze Target</h2>
                 <textarea id="target-tweet-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white placeholder-gray-500 focus:outline-none focus:border-red-600 mb-3 text-sm resize-none h-24" placeholder="Paste tweet text here..."></textarea>
-                <button onclick="generateTargetReplies()" id="btn-generate-replies" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95 transition-transform flex justify-center items-center">
-                    <i class="fa-solid fa-bolt mr-2"></i> Generate Toxic Bites
+                <button onclick="generateTargetReplies()" id="btn-generate-replies" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95 transition-transform">
+                    Generate Toxic Bites
                 </button>
             </div>
             <div id="replies-container" class="hidden space-y-3 mt-4"></div>
@@ -126,8 +122,6 @@
 
         <!-- ================= COMPOSER TAB ================= -->
         <section id="tab-composer" class="space-y-6 hidden">
-            
-            <!-- Daily Persona Ideas -->
             <div class="glass-panel p-4 rounded-xl border border-gray-800">
                 <h2 class="font-bold text-lg mb-2 flex items-center">
                     <i class="fa-solid fa-dna text-yellow-500 mr-2"></i> Persona Hooks
@@ -138,60 +132,96 @@
                 </button>
                 <div id="ideas-container" class="hidden mt-4 space-y-3"></div>
             </div>
-
-            <!-- Translator & Polisher -->
             <div class="glass-panel p-4 rounded-xl border border-gray-800">
                 <h2 class="font-bold text-lg mb-2 flex justify-between items-center">
-                    Draft & Polish
-                    <span class="text-[10px] font-normal text-gray-400 bg-gray-800 px-2 py-1 rounded">Anti-AI Engine</span>
+                    Draft & Polish <span class="text-[10px] text-gray-400 bg-gray-800 px-2 py-1 rounded">Anti-AI Engine</span>
                 </h2>
-                <textarea id="draft-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-red-600 resize-none h-32 placeholder-gray-600 text-sm" placeholder="Type your rough idea in RU/EN. I will translate and rewrite it into authentic Twitter slang without sounding like a robot..."></textarea>
-                
-                <div class="flex gap-2 mt-3">
-                    <button onclick="polishDraft()" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl transition-colors">
-                        <i class="fa-solid fa-wand-magic-sparkles mr-2 text-red-500"></i> Polish to Toxic Slang
-                    </button>
-                </div>
+                <textarea id="draft-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-red-600 resize-none h-32 placeholder-gray-600 text-sm" placeholder="Type your rough idea in RU/EN..."></textarea>
+                <button onclick="polishDraft()" class="w-full mt-3 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl transition-colors">
+                    Polish to Toxic Slang
+                </button>
             </div>
-
             <div id="polished-result-container" class="hidden glass-panel p-4 rounded-xl neon-border">
                 <p class="text-xs text-red-400 mb-2 font-bold">READY TO POST:</p>
                 <p id="polished-text" class="text-white text-sm mb-4"></p>
-                <button onclick="copyToClipboard('polished-text')" class="w-full bg-white text-black font-bold py-2 rounded-lg flex items-center justify-center">
-                    <i class="fa-regular fa-copy mr-2"></i> Copy
+                <button onclick="copyToClipboard('polished-text')" class="w-full bg-white text-black font-bold py-2 rounded-lg">Copy</button>
+            </div>
+        </section>
+
+        <!-- ================= FANSLY TAB ================= -->
+        <section id="tab-fansly" class="space-y-6 hidden">
+            <!-- FYP Tag Sniper -->
+            <div class="glass-panel p-4 rounded-xl border border-gray-800">
+                <h2 class="font-bold text-lg mb-2"><i class="fa-solid fa-hashtag text-sky-400 mr-2"></i>FYP Tag Sniper</h2>
+                <p class="text-xs text-gray-400 mb-3">Describe the content (e.g., "lab coat, arrogant, ignoring you").</p>
+                <textarea id="fansly-tag-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-sky-400 resize-none h-16 text-sm mb-3" placeholder="Content description..."></textarea>
+                <button onclick="generateFanslyTags()" id="btn-fansly-tags" class="w-full bg-sky-900/30 text-sky-400 border border-sky-800 hover:bg-sky-900/50 font-bold py-3 rounded-xl transition-colors">
+                    Snipe Algorithm Tags
                 </button>
+                <div id="fansly-tags-result" class="hidden mt-3 p-3 bg-gray-900 rounded-lg text-sm text-sky-200 cursor-pointer" onclick="copyToClipboard('fansly-tags-result')"></div>
+            </div>
+
+            <!-- PPV Bait Creator -->
+            <div class="glass-panel p-4 rounded-xl border border-gray-800">
+                <h2 class="font-bold text-lg mb-2"><i class="fa-solid fa-lock text-sky-400 mr-2"></i>PPV Bait Creator</h2>
+                <p class="text-xs text-gray-400 mb-3">Describe the locked media and price. AI will write a conversion caption.</p>
+                <textarea id="fansly-ppv-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-sky-400 resize-none h-20 text-sm mb-3" placeholder="e.g. $15, dirty boots, telling you to pay my tuition..."></textarea>
+                <button onclick="generatePPVBait()" id="btn-fansly-ppv" class="w-full bg-gradient-to-r from-sky-800 to-blue-700 text-white font-bold py-3 rounded-xl transition-transform active:scale-95">
+                    Generate PPV Hooks
+                </button>
+                <div id="fansly-ppv-result" class="hidden space-y-3 mt-4"></div>
+            </div>
+
+            <!-- Chat Analyzer -->
+            <div class="glass-panel p-4 rounded-xl border border-gray-800">
+                <h2 class="font-bold text-lg mb-2"><i class="fa-solid fa-messages text-sky-400 mr-2"></i>DM Analyzer</h2>
+                <p class="text-xs text-gray-400 mb-3">Paste a fan's DM. See if they are a Whale or Time-waster, and get a reply.</p>
+                <textarea id="fansly-chat-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-sky-400 resize-none h-20 text-sm mb-3" placeholder="Paste fan message..."></textarea>
+                <button onclick="analyzeFanslyChat()" id="btn-fansly-chat" class="w-full bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 font-bold py-3 rounded-xl transition-colors">
+                    Extract Money / Analyze
+                </button>
+                <div id="fansly-chat-result" class="hidden mt-4 p-4 rounded-xl fansly-border text-sm">
+                    <p class="font-bold text-sky-400 mb-1">Verdict: <span id="chat-verdict" class="text-white"></span></p>
+                    <p class="text-gray-300 text-xs mb-3" id="chat-reasoning"></p>
+                    <div class="bg-gray-900 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-sky-400" onclick="copyToClipboard('chat-reply', true)">
+                        <p class="text-xs text-sky-500 font-bold mb-1">Suggested Reply (Click to copy):</p>
+                        <p class="text-white" id="chat-reply"></p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- ================= SETTINGS TAB ================= -->
         <section id="tab-settings" class="space-y-6 hidden">
             <div class="glass-panel p-5 rounded-2xl border border-gray-800">
-                <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fa-solid fa-key text-red-500 mr-3"></i> API Configuration</h2>
+                <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-key text-red-500 mr-3"></i> API Configuration</h2>
                 <p class="text-xs text-gray-400 mb-4">Enter your Google Gemini API key to activate the AI. Stored locally.</p>
                 <input type="password" id="api-key-input" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-red-600 mb-4" placeholder="AIzaSy...">
-                <button onclick="saveApiKey()" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95 transition-transform">
-                    Save Key
-                </button>
+                <button onclick="saveApiKey()" class="w-full bg-red-700 text-white font-bold py-3 rounded-xl active:scale-95">Save Key</button>
             </div>
         </section>
 
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 w-full glass-panel border-t border-gray-800 flex justify-around items-center py-3 pb-safe z-50">
-        <button onclick="switchTab('stats')" class="nav-btn flex flex-col items-center text-red-500 transition-colors w-1/4" data-target="tab-stats">
+    <!-- Bottom Navigation (Updated for 5 tabs - w-1/5) -->
+    <nav class="fixed bottom-0 w-full glass-panel border-t border-gray-800 flex justify-between items-center py-3 pb-safe z-50 px-2">
+        <button onclick="switchTab('stats')" class="nav-btn flex flex-col items-center text-red-500 transition-colors w-1/5" data-target="tab-stats">
             <i class="fa-solid fa-chart-simple text-xl mb-1"></i>
             <span class="text-[10px] font-bold">Stats</span>
         </button>
-        <button onclick="switchTab('radar')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-radar">
+        <button onclick="switchTab('radar')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/5" data-target="tab-radar">
             <i class="fa-solid fa-satellite-dish text-xl mb-1"></i>
             <span class="text-[10px] font-bold">Radar</span>
         </button>
-        <button onclick="switchTab('composer')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-composer">
+        <button onclick="switchTab('composer')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/5" data-target="tab-composer">
             <i class="fa-solid fa-pen-nib text-xl mb-1"></i>
             <span class="text-[10px] font-bold">Composer</span>
         </button>
-        <button onclick="switchTab('settings')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/4" data-target="tab-settings">
+        <button onclick="switchTab('fansly')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-sky-400 transition-colors w-1/5" data-target="tab-fansly">
+            <i class="fa-solid fa-star text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">Fansly</span>
+        </button>
+        <button onclick="switchTab('settings')" class="nav-btn flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors w-1/5" data-target="tab-settings">
             <i class="fa-solid fa-gear text-xl mb-1"></i>
             <span class="text-[10px] font-bold">Settings</span>
         </button>
@@ -226,12 +256,12 @@
             document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tabId).classList.remove('hidden');
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-red-500');
+                btn.classList.remove('text-red-500', 'text-sky-400');
                 btn.classList.add('text-gray-500');
             });
             const activeBtn = document.querySelector(`.nav-btn[data-target="tab-${tabId}"]`);
             activeBtn.classList.remove('text-gray-500');
-            activeBtn.classList.add('text-red-500');
+            activeBtn.classList.add(tabId === 'fansly' ? 'text-sky-400' : 'text-red-500');
             window.scrollTo(0, 0);
         }
 
@@ -239,15 +269,17 @@
             const text = isDirectText ? elementId : document.getElementById(elementId).innerText;
             try {
                 await navigator.clipboard.writeText(text);
-                if(!isDirectText) alert('Copied to clipboard!');
-            } catch (err) {
-                console.error('Failed to copy', err);
-            }
+                if(!isDirectText) {
+                    const el = document.getElementById(elementId);
+                    const originalBg = el.style.backgroundColor;
+                    el.style.backgroundColor = 'rgba(56, 189, 248, 0.2)';
+                    setTimeout(() => el.style.backgroundColor = originalBg, 300);
+                }
+            } catch (err) { console.error('Copy failed', err); }
         }
 
-        // ================= SNIPER SEARCH (TRENDING) =================
         function executeSearch(category) {
-            const minFaves = 15; // Requires tweets to have at least 15 likes to avoid dead posts
+            const minFaves = 15;
             const queries = {
                 vanilla: `("pay for your" OR "treat you" OR "buy you") min_faves:${minFaves} -filter:links -filter:replies lang:en`,
                 crypto: `("crypto" OR "bitcoin" OR "alpha male" OR "tech bro") min_faves:30 -filter:links lang:en`,
@@ -255,11 +287,10 @@
                 stem: `("med school" OR "biochem" OR "exam" OR "lab") min_faves:${minFaves} -filter:links lang:en`,
                 anime: `("makima" OR "waifu" OR "good boy") min_faves:${minFaves} -filter:links lang:en`
             };
-            const query = queries[category];
-            window.open(`https://x.com/search?q=${encodeURIComponent(query)}&f=live`, '_blank');
+            window.open(`https://x.com/search?q=${encodeURIComponent(queries[category])}&f=live`, '_blank');
         }
 
-        // ================= GEMINI API CALL =================
+        // ================= GEMINI API CALL (MODIFIED WITH ZERO FILTERS) =================
         async function callGemini(prompt, systemInstruction = "", imageBase64 = null, imageMime = null) {
             if(!apiKey) {
                 alert('Please enter your Gemini API Key in Settings first.');
@@ -274,7 +305,14 @@
             const payload = {
                 contents: [{ parts: parts }],
                 systemInstruction: { parts: [{ text: systemInstruction }] },
-                generationConfig: { responseMimeType: "application/json" }
+                generationConfig: { responseMimeType: "application/json" },
+                // BYPASSING FILTERS FOR FINANCAL/FINDOM/MARKETING CONTEXT
+                safetySettings: [
+                    { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                    { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                    { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                    { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+                ]
             };
 
             try {
@@ -292,7 +330,7 @@
             }
         }
 
-        // ================= VISION AI (STATS) =================
+        // Stats & X-Empire Functions
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -311,25 +349,15 @@
         async function analyzeImageStats() {
             if (!uploadedBase64) return;
             const btn = document.getElementById('btn-analyze-image');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analyzing...';
+            btn.innerHTML = 'Analyzing...';
             btn.disabled = true;
-
-            const systemInstruction = `You are a ruthless Findom account manager. Extract key metrics from this X analytics screenshot.
-            Give short, harsh strategic advice for a Findom account.
-            JSON output: {"metrics": {"Impressions": "1.2K", "Clicks": "45"}, "strategy": "2-3 sentences of brutal strategy."}`;
-            
+            const systemInstruction = `Extract key metrics from this X analytics screenshot. Give short, harsh strategic advice for a Findom account. JSON: {"metrics": {"Impressions": "1.2K", "Clicks": "45"}, "strategy": "..."}`;
             const result = await callGemini("Analyze this.", systemInstruction, uploadedBase64, uploadedMimeType);
-            
             if(result && result.metrics) {
-                const metricsContainer = document.getElementById('extracted-metrics');
-                metricsContainer.innerHTML = '';
+                const container = document.getElementById('extracted-metrics');
+                container.innerHTML = '';
                 for (const [key, val] of Object.entries(result.metrics)) {
-                    metricsContainer.innerHTML += `
-                        <div class="glass-panel p-4 rounded-2xl border border-red-900/30">
-                            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">${key}</p>
-                            <p class="text-xl font-black text-white">${val}</p>
-                        </div>
-                    `;
+                    container.innerHTML += `<div class="glass-panel p-4 rounded-2xl border border-red-900/30"><p class="text-gray-400 text-xs font-bold uppercase mb-1">${key}</p><p class="text-xl font-black text-white">${val}</p></div>`;
                 }
                 document.getElementById('ai-strategy-text').innerText = result.strategy;
                 document.getElementById('stats-analysis-result').classList.remove('hidden');
@@ -338,111 +366,139 @@
             btn.disabled = false;
         }
 
-        // ================= TARGET REPLIES (ANTI-AI TONE) =================
         async function generateTargetReplies() {
-            const tweetText = document.getElementById('target-tweet-input').value.trim();
-            if (!tweetText) return alert("Please paste the target's tweet first.");
-
+            const text = document.getElementById('target-tweet-input').value.trim();
+            if (!text) return;
             const btn = document.getElementById('btn-generate-replies');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Thinking...';
-            btn.disabled = true;
-
-            const systemInstruction = `You are a 6th-year med biochemistry student, curvy, arrogant, and extremely cold. You use Twitter for Findom/Ragebait.
-            CRITICAL RULES: DO NOT SOUND LIKE AN AI. NO generic words like "Ah,", "Navigating", "Let's delve". 
-            Write like a toxic Gen Z / Twitter user. Use lowercase sometimes. Be brutally mocking.
-            Output JSON: {"replies": ["reply 1", "reply 2", "reply 3"]}`;
-            
-            const result = await callGemini(`Mock this target tweet: "${tweetText}"`, systemInstruction);
-            
+            btn.innerHTML = 'Thinking...'; btn.disabled = true;
+            const sys = `You are a 6th-year med biochem student, curvy, arrogant, cold. Findom/Ragebait. NO AI SPEAK. Output JSON: {"replies": ["reply 1", "reply 2", "reply 3"]}`;
+            const result = await callGemini(`Mock this: "${text}"`, sys);
             if (result && result.replies) {
                 const container = document.getElementById('replies-container');
                 container.innerHTML = '';
-                result.replies.forEach((reply, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 cursor-pointer transition-colors';
-                    card.onclick = function() {
-                        copyToClipboard(reply, true);
-                        this.classList.add('bg-red-900/30');
-                        setTimeout(() => this.classList.remove('bg-red-900/30'), 300);
-                    };
-                    card.innerHTML = `<p class="text-sm text-gray-200">"${reply}"</p>`;
-                    container.appendChild(card);
+                result.replies.forEach((reply, i) => {
+                    container.innerHTML += `<div class="glass-panel p-3 rounded-xl border border-gray-700 hover:border-red-500 cursor-pointer" onclick="copyToClipboard('${reply.replace(/'/g, "\\'")}', true)"><p class="text-sm text-gray-200">"${reply}"</p></div>`;
                 });
                 container.classList.remove('hidden');
             }
-            btn.innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Generate Toxic Bites';
-            btn.disabled = false;
+            btn.innerHTML = 'Generate Toxic Bites'; btn.disabled = false;
         }
 
-        // ================= PERSONA CONTENT IDEAS =================
         async function generateIdeas() {
             const btn = document.getElementById('btn-generate-ideas');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Brainstorming...';
-            btn.disabled = true;
-
-            const systemInstruction = `You are the brain behind a successful Twitter account. 
-            PERSONA: 6th-year medical biochemistry university student in Russia, curvy, cold, treats men like walking ATMs, extremely busy with labs and exams, arrogant.
-            TASK: Generate 3 unique tweet ideas for today to farm engagement and money. 
-            - 1 Ragebait tweet (pissing off crypto bros or normies).
-            - 1 Organic Findom flex (tying academic superiority to their pathetic lives).
-            - 1 Casual shitpost (student/lab life mixed with dominance).
-            STRICT RULES: ZERO AI-speak. NO "Ah,", NO "Delve". Use natural Gen Z twitter slang, sometimes lowercase. Don't overuse emojis.
-            Output JSON: {"ideas": ["tweet 1", "tweet 2", "tweet 3"]}`;
-            
-            const result = await callGemini("Generate 3 persona tweets for today.", systemInstruction);
-            
+            btn.innerHTML = 'Brainstorming...'; btn.disabled = true;
+            const sys = `PERSONA: 6th-year med biochem student in Russia, curvy, cold, treats men like ATMs, busy with lab. Gen Z slang. JSON: {"ideas": ["idea 1", "idea 2", "idea 3"]}`;
+            const result = await callGemini("Generate 3 persona tweets.", sys);
             if (result && result.ideas) {
                 const container = document.getElementById('ideas-container');
                 container.innerHTML = '';
-                result.ideas.forEach((idea) => {
-                    const card = document.createElement('div');
-                    card.className = 'glass-panel p-3 rounded-lg border border-yellow-900/30 cursor-pointer hover:border-yellow-500 text-sm text-gray-200 transition-colors';
-                    card.onclick = function() {
-                        document.getElementById('draft-input').value = idea;
-                        window.scrollTo(0, document.getElementById('draft-input').offsetTop - 100);
-                    };
-                    card.innerHTML = `"${idea}" <br><span class="text-[10px] text-yellow-600 font-bold mt-1 block">Click to edit in Draft</span>`;
-                    container.appendChild(card);
+                result.ideas.forEach(idea => {
+                    container.innerHTML += `<div class="glass-panel p-3 rounded-lg border border-yellow-900/30 cursor-pointer hover:border-yellow-500 text-sm text-gray-200" onclick="document.getElementById('draft-input').value='${idea.replace(/'/g, "\\'")}';"><p>"${idea}"</p></div>`;
                 });
                 container.classList.remove('hidden');
             }
-            btn.innerHTML = originalText;
-            btn.disabled = false;
+            btn.innerHTML = 'Generate Daily Tweets'; btn.disabled = false;
         }
 
-        // ================= COMPOSER POLISHER =================
         async function polishDraft() {
             const draft = document.getElementById('draft-input').value;
             if(!draft) return;
             const btn = document.querySelector('button[onclick="polishDraft()"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Polishing...';
-
-            const systemInstruction = `You are a translator and ghostwriter for a cold, curvy 6th-year biochem student doing Findom.
-            Translate the user's draft to English (if needed) and rewrite it for Twitter.
-            CRITICAL: It must sound 100% human. Toxic, arrogant, slang-heavy (but natural). NEVER use AI marker words.
-            Output JSON: {"text": "the polished text"}`;
-            
-            const result = await callGemini(draft, systemInstruction);
-            
+            btn.innerHTML = 'Polishing...';
+            const sys = `Translate/rewrite to English Twitter Findom slang. 100% human, toxic, arrogant. JSON: {"text": "polished text"}`;
+            const result = await callGemini(draft, sys);
             if(result && result.text) {
                 document.getElementById('polished-text').innerText = result.text;
                 document.getElementById('polished-result-container').classList.remove('hidden');
             }
-            btn.innerHTML = originalText;
+            btn.innerHTML = 'Polish to Toxic Slang';
+        }
+
+        // ================= FANSLY SPECIFIC FUNCTIONS =================
+        
+        async function generateFanslyTags() {
+            const desc = document.getElementById('fansly-tag-input').value;
+            if(!desc) return;
+            const btn = document.getElementById('btn-fansly-tags');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sniping...';
+            
+            // ОБНОВЛЕННЫЙ ПРОМПТ ДЛЯ ЖЕСТКОГО NSFW
+            const sys = `You are an expert Fansly FYP algorithm strategist for an 18+ NSFW creator. 
+            Fansly allows and encourages hardcore explicit content. 
+            CRITICAL RULES:
+            1. Use REAL, strictly existing explicit tags known to be used on Fansly/OnlyFans. Do not invent fake long phrases.
+            2. If the user's description implies it, you MUST use explicit anatomical or hardcore fetish tags (e.g., #nsfw, #pussy, #dickrating, #sph, #bgh, #cuckold, etc.). Do not censor yourself.
+            3. Generate a balanced pyramid: 3 broad (massive NSFW/Findom traffic), 5 medium (specific fetish/niche), 3 narrow (hyper-specific).
+            Output ONLY JSON: {"tags": ["#tag1", "#tag2", ...]}`;
+            
+            const result = await callGemini(`Content: ${desc}`, sys);
+            if(result && result.tags) {
+                const resultDiv = document.getElementById('fansly-tags-result');
+                resultDiv.innerText = result.tags.join(' ');
+                resultDiv.classList.remove('hidden');
+            }
+            btn.innerHTML = 'Snipe Algorithm Tags';
+        }
+
+        async function generatePPVBait() {
+            const desc = document.getElementById('fansly-ppv-input').value;
+            if(!desc) return;
+            const btn = document.getElementById('btn-fansly-ppv');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Creating Bait...';
+            
+            const sys = `You are a cold 6th-year medical biochemistry student running a Fansly/Findom account. 
+            Create 3 different short, manipulative, and arrogant PPV (Pay-Per-View) captions based on the user's media/price description.
+            Use your persona: tired of labs, intellectually superior, views men as pathetic ATMs. 
+            Output ONLY JSON: {"baits": ["caption 1", "caption 2", "caption 3"]}`;
+            
+            const result = await callGemini(`PPV Info: ${desc}`, sys);
+            if(result && result.baits) {
+                const container = document.getElementById('fansly-ppv-result');
+                container.innerHTML = '';
+                result.baits.forEach((bait, i) => {
+                    container.innerHTML += `
+                        <div class="bg-gray-900 p-3 rounded-lg border border-gray-800 cursor-pointer hover:border-sky-500 transition-colors" onclick="copyToClipboard('${bait.replace(/'/g, "\\'")}', true)">
+                            <span class="text-xs text-sky-500 font-bold mb-1 block">Bait ${i+1}</span>
+                            <p class="text-sm text-gray-200">"${bait}"</p>
+                        </div>`;
+                });
+                container.classList.remove('hidden');
+            }
+            btn.innerHTML = 'Generate PPV Hooks';
+        }
+
+        async function analyzeFanslyChat() {
+            const msg = document.getElementById('fansly-chat-input').value;
+            if(!msg) return;
+            const btn = document.getElementById('btn-fansly-chat');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analyzing...';
+            
+            const sys = `You are a ruthless Findom strategist. Analyze this fan's DM.
+            1. Verdict: Is this a "Whale" (likely to pay), a "Time-waster" (freeloader), or a "Paypig" (ready to submit).
+            2. Reasoning: 1 short sentence why.
+            3. Reply: A manipulative response to either extract money immediately or set up a hard paywall. You are a cold, busy biochem student.
+            Output ONLY JSON: {"verdict": "Whale/Time-waster", "reasoning": "...", "reply": "..."}`;
+            
+            const result = await callGemini(`Fan message: "${msg}"`, sys);
+            if(result) {
+                document.getElementById('chat-verdict').innerText = result.verdict;
+                document.getElementById('chat-verdict').className = result.verdict.toLowerCase().includes('time') ? 'text-red-500' : 'text-green-400';
+                document.getElementById('chat-reasoning').innerText = result.reasoning;
+                document.getElementById('chat-reply').innerText = result.reply;
+                document.getElementById('fansly-chat-result').classList.remove('hidden');
+            }
+            btn.innerHTML = 'Extract Money / Analyze';
         }
 
         updateApiStatus();
-        switchTab('composer'); // Set default tab for testing new feature
+        switchTab('fansly'); // Open fansly tab by default to see the new feature
     </script>
 
     <!-- Service Worker -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .catch(err => console.log('SW fail: ', err));
+          navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW fail: ', err));
         });
       }
     </script>
